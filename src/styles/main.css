@@ -1,0 +1,109 @@
+
+.activity-card {
+  height: 260px; 
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.activity-card:hover {
+  transform: scale(1.02);
+}
+
+/* Truncate text after 3 lines */
+.text-truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.activity-card .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.hero-section {
+  height: calc(100vh - 70px);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  pointer-events: none; 
+}
+
+.hero-content button {
+  pointer-events: auto; 
+}
+
+.arrow-down-button {
+  position: relative; 
+  background: none;
+  border: none;
+  font-size: 5rem;
+  color: #000;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px); 
+  }
+}
+
+.active-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.active-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.active-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.active-card {
+  display: inline-block;
+  width: 33.333%;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.active-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spline-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    z-index: 1;
+  pointer-events: auto; 
+  overflow: hidden;
+}

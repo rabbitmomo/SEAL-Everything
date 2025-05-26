@@ -1,0 +1,77 @@
+export const allProposals = [
+  // Active proposals currently under discussion
+  {
+    id: "p1",
+    fieldId: 1,
+    title: "How about planting cabbage on Plot A?",
+    votes: { Yes: 23, No: 12 },
+    deadline: "2025-06-30",
+    status: "Active",
+  },
+  {
+    id: "p2",
+    fieldId: 1,
+    title: "Should we switch to organic fertilizer?",
+    votes: { Yes: 31, No: 8 },
+    deadline: "2025-07-05",
+    status: "Active",
+  },
+  {
+    id: "p3",
+    fieldId: 2,
+    title: "What do you think about adding chili peppers next cycle?",
+    votes: { Yes: 27, No: 15 },
+    deadline: "2025-06-25",
+    status: "Active",
+  },
+  {
+    id: "p4",
+    fieldId: 2,
+    title: "Proposal: Install shade nets over the seedlings?",
+    votes: { Yes: 22, No: 5 },
+    deadline: "2025-07-12",
+    status: "Active",
+  },
+  {
+    id: "p5",
+    fieldId: 3,
+    title: "Let’s switch to drip irrigation, shall we?",
+    votes: { Yes: 33, No: 4 },
+    deadline: "2025-06-20",
+    status: "Active",
+  },
+  {
+    id: "p6",
+    fieldId: 3,
+    title: "How about growing basil intercropped with tomatoes?",
+    votes: { Yes: 29, No: 10 },
+    deadline: "2025-07-15",
+    status: "Active",
+  },
+
+  // Past proposals with final results
+  {
+    id: "p_old1",
+    fieldId: 1,
+    title: "Converted land to vertical beds — results are in.",
+    votes: { Yes: 36, No: 28 },
+    deadline: "2025-06-10",
+    status: "Ended",
+  },
+  {
+    id: "p_old2",
+    fieldId: 2,
+    title: "Rotation with onions in Field B — final tally.",
+    votes: { Yes: 29, No: 14 },
+    deadline: "2025-05-30",
+    status: "Ended",
+  },
+  {
+    id: "p_old3",
+    fieldId: 3,
+    title: "Composting station installed — voting closed.",
+    votes: { Yes: 44, No: 11 },
+    deadline: "2025-05-15",
+    status: "Ended",
+  },
+];
