@@ -3,9 +3,10 @@ import SplineCropOne from "../components/SplineCropsOne";
 import SplineCropTwo from "../components/SplineCropsTwo";
 import SplineCropThree from "../components/SplineCropsThree";
 import { useSearchParams } from "react-router-dom";
-import { mockFieldStatus, fields } from "../data/fieldData";
+import { mockFieldStatus } from "../data/fieldData";
 
 export default function FieldLiveTracking() {
+  const [fields, setFields] = useState([]);
   const [searchParams] = useSearchParams();
   const fieldIdParam = searchParams.get("fieldId");
   const initialFieldId = fieldIdParam ? parseInt(fieldIdParam) : 1;
@@ -13,8 +14,94 @@ export default function FieldLiveTracking() {
   const [selectedField, setSelectedField] = useState(initialFieldId);
   const [fieldStatus, setFieldStatus] = useState(null);
 
+  const [weatherData, setWeatherData] = useState(null);
+  const [analysis, setAnalysis] = useState(""); 
+
   useEffect(() => {
-    // When the selected field changes, update the field status from mock data
+    fetch("http://localhost:5000/field-primary")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => {
+        setFields(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedField !== null) {
+      const field = fields.find((f) => f.id === selectedField);
+      setFieldStatus(mockFieldStatus[selectedField]);
+
+      if (field?.location) {
+        fetch(
+          `http://localhost:5000/weather?city=${encodeURIComponent(
+            field.location
+          )}`
+        )
+          .then((res) => {
+            if (!res.ok) throw new Error("Failed to fetch weather");
+            return res.json();
+          })
+          .then((data) => {
+            setWeatherData(data);
+          })
+          .catch((err) => {
+            console.error("Weather fetch error:", err);
+            setWeatherData(null);
+          });
+      }
+    }
+  }, [selectedField, fields]);
+
+  useEffect(() => {
+    if (selectedField && fieldStatus && weatherData) {
+      const field = fields.find((f) => f.id === selectedField);
+      const payload = {
+        prompt: `Analyze the health and sustainability of the following agricultural field data and give suggestions if needed:\n\n
+Field Name: ${field?.name}\n
+Location: ${field?.location}\n
+Crops:\n${fieldStatus.crops
+          .map((c) => `- ${c.name} (${c.growthStage})`)
+          .join("\n")}\n
+Estimated Harvest Date: ${fieldStatus.estimatedHarvestDate}\n
+Last Fertilized: ${fieldStatus.lastFertilized}\n
+Irrigation Status: ${fieldStatus.irrigationStatus}\n
+Soil Moisture: ${fieldStatus.soilMoisture}\n
+Weather:\n
+  - Temperature: ${weatherData.temperature}°C\n
+  - Condition: ${weatherData.condition}\n
+  - Humidity: ${weatherData.humidity}%\n
+  - Wind Speed: ${weatherData.windSpeed} km/h\n
+Notes: ${fieldStatus.notes || "None"}
+`,
+      };
+
+      fetch("http://localhost:5000/openai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch analysis");
+          return res.json();
+        })
+        .then((data) => {
+          setAnalysis(data.message || "No analysis available.");
+        })
+        .catch((err) => {
+          console.error("AI Analysis Error:", err);
+          setAnalysis("Unable to retrieve analysis at this time.");
+        });
+    }
+  }, [fields, selectedField, fieldStatus, weatherData]);
+
+  useEffect(() => {
     if (selectedField !== null) {
       setFieldStatus(mockFieldStatus[selectedField]);
     }
@@ -93,6 +180,7 @@ export default function FieldLiveTracking() {
               flexBasis: "30%",
               flexGrow: 1,
               minWidth: "300px",
+              maxHeight: "450px",
               backgroundColor: "#f0f8ff",
               borderRadius: "0.5rem",
               padding: "1rem",
@@ -156,10 +244,16 @@ export default function FieldLiveTracking() {
 
             <section className="mb-4">
               <h5 className="mb-3">Weather Conditions:</h5>
-              <p>🌡️ Temperature: {fieldStatus.weather.temperature}°C</p>
-              <p>🌤️ Condition: {fieldStatus.weather.condition}</p>
-              <p>💧 Humidity: {fieldStatus.weather.humidity}%</p>
-              <p>💨 Wind Speed: {fieldStatus.weather.windSpeed} km/h</p>
+              {weatherData ? (
+                <>
+                  <p>🌡️ Temperature: {weatherData.temperature}°C</p>
+                  <p>🌤️ Condition: {weatherData.condition}</p>
+                  <p>💧 Humidity: {weatherData.humidity}%</p>
+                  <p>💨 Wind Speed: {weatherData.windSpeed} km/h</p>
+                </>
+              ) : (
+                <p className="text-muted">Weather data not available.</p>
+              )}
             </section>
 
             <section className="mb-4">
@@ -172,6 +266,11 @@ export default function FieldLiveTracking() {
             <section>
               <h5 className="mb-3">Notes:</h5>
               <p>{fieldStatus.notes || "No additional notes at this time."}</p>
+            </section>
+
+            <section className="mt-4">
+              <h5 className="mb-2">🧠 Field Health Summary (AI Analysis):</h5>
+              <p className="text-muted">{analysis || "Analyzing..."}</p>
             </section>
           </div>
         </div>

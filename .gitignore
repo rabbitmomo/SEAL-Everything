@@ -26,4 +26,4 @@ dist-ssr
 .history/
 .vscode/
 node_modules/
-
+.env

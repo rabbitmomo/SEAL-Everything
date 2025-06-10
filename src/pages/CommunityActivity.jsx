@@ -13,7 +13,6 @@ export default function CommunityActivityPage() {
     <div
       className="container py-5"
       style={{
-        backgroundColor: "#f4f0fa",
         minHeight: "100vh",
       }}
     >
@@ -47,11 +46,36 @@ export default function CommunityActivityPage() {
           }}
         >
           <h2 className="mb-3">{selectedActivity.title}</h2>
-          <p><strong>Description:</strong> {selectedActivity.description}</p>
-          <p><strong>Objective:</strong> {selectedActivity.objective}</p>
-          <p><strong>Tentative Plan:</strong> {selectedActivity.tentative}</p>
-          <p><strong>Date:</strong> {selectedActivity.date}</p>
-          <p><strong>Location:</strong> {selectedActivity.location}</p>
+
+          {selectedActivity.image && (
+            <img
+              src={selectedActivity.image}
+              alt={selectedActivity.title}
+              style={{
+                width: "100%",
+                maxHeight: "400px",
+                objectFit: "cover",
+                borderRadius: "0.5rem",
+                marginBottom: "1rem",
+              }}
+            />
+          )}
+
+          <p>
+            <strong>Description:</strong> {selectedActivity.description}
+          </p>
+          <p>
+            <strong>Objective:</strong> {selectedActivity.objective}
+          </p>
+          <p>
+            <strong>Tentative Plan:</strong> {selectedActivity.tentative}
+          </p>
+          <p>
+            <strong>Date:</strong> {selectedActivity.date}
+          </p>
+          <p>
+            <strong>Location:</strong> {selectedActivity.location}
+          </p>
 
           <button className="btn btn-light mt-4" onClick={handleBack}>
             ← Back to All Activities

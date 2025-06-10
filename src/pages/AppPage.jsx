@@ -1,10 +1,40 @@
 import React from "react";
 import Header from "../components/Header";
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import { GradientTexture } from "@react-three/drei";
 
 export default function AppPage() {
+  useEffect(() => {
+    const video = document.querySelector("video");
+    if (video) {
+      video.play().catch((error) => {
+        console.log("Autoplay prevented:", error);
+        document.addEventListener("click", () => video.play(), { once: true });
+      });
+    }
+  }, []);
   return (
-    <>
+    <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+      <video
+        preload="auto"
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+        }}
+      >
+        <source src="/AppBackground3.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <div className="container py-5 text-center">
         <h1
           className="mb-3"
@@ -12,6 +42,8 @@ export default function AppPage() {
             fontWeight: "700",
             letterSpacing: "1.5px",
             color: "#00796b",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           Welcome to SEAL Everything
@@ -135,23 +167,38 @@ export default function AppPage() {
 
         {/* Community Impact Section */}
         <div
-          className="p-5 rounded shadow-lg"
+          className="card h-100 shadow"
           style={{
-            background: "linear-gradient(135deg, #1de9b6 0%, #1dc4e9 100%)",
-            color: "white",
-            fontWeight: "600",
-            textShadow: "0 1px 5px rgba(0,0,0,0.3)",
+            background: "rgba(255, 255, 255, 0.15)",
+            backdropFilter: "blur(6px)",
+            borderRadius: "15px",
+            border: `1px solid green`,
+            color: "green",
+            padding: "2rem",
+            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+            cursor: "pointer",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = `0 10px 30px green88`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "none";
+            e.currentTarget.style.boxShadow = "none";
           }}
         >
-          <h3 className="mb-3">
+          <h3 className="mb-3" style={{ fontWeight: "700" }}>
             <i
               className="bi bi-people-fill me-2"
               style={{ fontSize: "1.6rem" }}
             ></i>
-            Join Our Growing Community
+            <span style={{ color: "blue" }}>Join</span>{" "}
+            <span style={{ color: "green" }}>Our</span>{" "}
+            <span style={{ color: "#ffaa00" }}>Growing</span>{" "}
+            <span style={{ color: "red" }}>Community</span>
           </h3>
 
-          <p className="mb-4 fs-5">
+          <p className="mb-4 fs-5" style={{ color: "black" }}>
             Together, we support local farmers, reduce food waste, and build a
             sustainable future. Connect, share tips, participate in events, and
             make a real difference in your neighborhood.
@@ -194,6 +241,6 @@ export default function AppPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

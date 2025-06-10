@@ -3,7 +3,7 @@ export const allProposals = [
   {
     id: "p1",
     fieldId: 1,
-    title: "How about planting cabbage on Plot A?",
+    title: "Should we plant cabbage in Rawang - Plot 3?",
     votes: { Yes: 23, No: 12 },
     deadline: "2025-06-30",
     status: "Active",
@@ -11,7 +11,7 @@ export const allProposals = [
   {
     id: "p2",
     fieldId: 1,
-    title: "Should we switch to organic fertilizer?",
+    title: "Use organic chicken manure for Plot 5 in Rawang?",
     votes: { Yes: 31, No: 8 },
     deadline: "2025-07-05",
     status: "Active",
@@ -19,7 +19,7 @@ export const allProposals = [
   {
     id: "p3",
     fieldId: 2,
-    title: "What do you think about adding chili peppers next cycle?",
+    title: "Add chili peppers to next cycle in Semenyih - Field A?",
     votes: { Yes: 27, No: 15 },
     deadline: "2025-06-25",
     status: "Active",
@@ -27,7 +27,7 @@ export const allProposals = [
   {
     id: "p4",
     fieldId: 2,
-    title: "Proposal: Install shade nets over the seedlings?",
+    title: "Install shade nets for young crops in Semenyih - Field B?",
     votes: { Yes: 22, No: 5 },
     deadline: "2025-07-12",
     status: "Active",
@@ -35,7 +35,7 @@ export const allProposals = [
   {
     id: "p5",
     fieldId: 3,
-    title: "Let’s switch to drip irrigation, shall we?",
+    title: "Switch to drip irrigation in Sitiawan - Plot C?",
     votes: { Yes: 33, No: 4 },
     deadline: "2025-06-20",
     status: "Active",
@@ -43,7 +43,7 @@ export const allProposals = [
   {
     id: "p6",
     fieldId: 3,
-    title: "How about growing basil intercropped with tomatoes?",
+    title: "Intercrop basil with tomatoes in Sitiawan - Plot D?",
     votes: { Yes: 29, No: 10 },
     deadline: "2025-07-15",
     status: "Active",
@@ -53,7 +53,7 @@ export const allProposals = [
   {
     id: "p_old1",
     fieldId: 1,
-    title: "Converted land to vertical beds — results are in.",
+    title: "Should we install Vertical beds at Rawang - Plot 2.",
     votes: { Yes: 36, No: 28 },
     deadline: "2025-06-10",
     status: "Ended",
@@ -61,7 +61,7 @@ export const allProposals = [
   {
     id: "p_old2",
     fieldId: 2,
-    title: "Rotation with onions in Field B — final tally.",
+    title: "Should we plan onion rotation in Semenyih - Field B.",
     votes: { Yes: 29, No: 14 },
     deadline: "2025-05-30",
     status: "Ended",
@@ -69,7 +69,7 @@ export const allProposals = [
   {
     id: "p_old3",
     fieldId: 3,
-    title: "Composting station installed — voting closed.",
+    title: "Shoudle we build composting station in Sitiawan - Plot 3.",
     votes: { Yes: 44, No: 11 },
     deadline: "2025-05-15",
     status: "Ended",

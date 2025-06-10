@@ -1,17 +1,31 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import {fields} from "../data/fieldData.js"; 
 
 export default function Header() {
+  const [fields, setFields] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const isAppRoute = location.pathname.startsWith("/app");
 
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/field-primary")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => {
+        setFields(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {

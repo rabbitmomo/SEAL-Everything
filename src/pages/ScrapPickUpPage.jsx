@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { pickupStages, mockScrapTypes, mockRequest } from "../data/strapPickUpData";
 
 const ScrapPickUpPage = () => {
-  // Current stage is fixed here but can be dynamic in a real app
   const currentStageIndex = 1;
 
   const [request, setRequest] = useState(null);

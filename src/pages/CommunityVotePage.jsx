@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
-import { fields } from "../data/fieldData.js";
 import { allProposals as initialProposals } from "../data/communityVotingData.js";
 
 export default function CommunityVotingPage() {
+  const [fields, setFields] = useState([]);
+
   const [proposals, setProposals] = useState(initialProposals);
 
   const [selectedFieldId, setSelectedFieldId] = useState(null);
   const [selectedProposalId, setSelectedProposalId] = useState(null);
   const [voted, setVoted] = useState(false);
   const [choice, setChoice] = useState("");
-
+  useEffect(() => {
+    fetch("http://localhost:5000/field-primary")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => {
+        setFields(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
   const visible = selectedFieldId
     ? proposals.filter((p) => p.fieldId === selectedFieldId)
     : proposals;
@@ -49,8 +62,10 @@ export default function CommunityVotingPage() {
   };
 
   return (
-    <div className="container py-5" style={{ backgroundColor: "#f4f0fa" }}>
-      <h2 className="text-center mb-4 fw-bold">🗳️ Community Voting Hub</h2>
+    <div className="container py-5">
+      <h2 className="text-center text-primary mb-4 fw-bold">
+        🗳️ Community Voting Hub
+      </h2>
 
       <div className="mb-4 d-flex justify-content-center flex-wrap gap-2">
         <button
@@ -174,7 +189,20 @@ export default function CommunityVotingPage() {
         </div>
       ) : (
         <>
-          <h4 className="mt-5 mb-3">📌 Active Proposals</h4>
+          <h4 className="mt-5 mb-3 ">
+            📌{" "}
+            <span
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(4px)",
+                WebkitBackdropFilter: "blur(4px)", // for Safari support
+                padding: "0.3rem 0.6rem",
+                borderRadius: "6px",
+              }}
+            >
+              Active Proposals{" "}
+            </span>
+          </h4>
           <div
             className="d-flex flex-row flex-nowrap overflow-auto pb-3"
             style={{ gap: "1rem" }}
@@ -223,7 +251,20 @@ export default function CommunityVotingPage() {
             })}
           </div>
 
-          <h5 className="mt-4 mb-3">🕓 Past Proposals</h5>
+          <h5 className="mt-4 mb-3">
+            🕓
+            <span
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(4px)",
+                WebkitBackdropFilter: "blur(4px)", // for Safari support
+                padding: "0.3rem 0.6rem",
+                borderRadius: "6px",
+              }}
+            >
+              Past Proposals
+            </span>{" "}
+          </h5>
           <div className="row">
             {past.map((p) => {
               const f = fields.find((x) => x.id === p.fieldId) || {};

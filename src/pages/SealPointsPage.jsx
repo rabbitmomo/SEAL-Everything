@@ -1,14 +1,25 @@
-import React, { useState } from "react";
-import {
-  userInitialPoints,
-  rewardOptions,
-} from "../data/sealPointsData.js";
-import { fields } from "../data/fieldData.js";
+import { useState, useEffect } from "react";
+import { userInitialPoints, rewardOptions } from "../data/sealPointsData.js";
 
 export default function SealPointsPage() {
+  const [fields, setFields] = useState([]);
   const [points, setPoints] = useState(userInitialPoints);
   const [redeemed, setRedeemed] = useState([]);
   const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/field-primary")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => {
+        setFields(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleRedeem = (reward) => {
     if (points < reward.cost) {
@@ -44,7 +55,7 @@ export default function SealPointsPage() {
         🌿 SEAL Points Reward Center
       </h2>
 
-      <div className="mb-4 p-3 bg-light rounded text-center">
+      <div className="mb-4 p-3 rounded text-center">
         <h4>Your Points Balance</h4>
         <p className="display-4 text-success fw-bold">{points} pts</p>
       </div>
@@ -65,7 +76,21 @@ export default function SealPointsPage() {
         </div>
       )}
 
-      <h4 className="mb-3">Available Rewards to Redeem</h4>
+      <h4 className="mb-3">
+        <span
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
+            padding: "0.4rem 0.8rem",
+            borderRadius: "8px",
+            color: "#006400", // Dark green
+            fontWeight: "600",
+          }}
+        >
+          Available Rewards to Redeem
+        </span>
+      </h4>
       <div className="list-group mb-4">
         {rewardOptions.map((reward) => {
           const redeemedCount = redeemed.filter(
@@ -105,7 +130,21 @@ export default function SealPointsPage() {
 
       {redeemed.length > 0 && (
         <>
-          <h4 className="mb-3">Your Redeemed Rewards</h4>
+          <h4 className="mb-3">
+            <span
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(4px)",
+                WebkitBackdropFilter: "blur(4px)",
+                padding: "0.4rem 0.8rem",
+                borderRadius: "8px",
+                color: "#2e7d32", // Light green
+                fontWeight: "600",
+              }}
+            >
+              Your Redeemed Rewards
+            </span>
+          </h4>
           <ul className="list-group">
             {redeemed.map((reward, index) => (
               <li key={`${reward.id}-${index}`} className="list-group-item">

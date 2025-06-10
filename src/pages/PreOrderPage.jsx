@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SplineCropOne from "../components/SplineCropsOne";
 import SplineCropTwo from "../components/SplineCropsTwo";
 import SplineCropThree from "../components/SplineCropsThree";
-import { fields, cropsByField } from "../data/fieldData";
+import { cropsByField } from "../data/fieldData";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en-MY", {
@@ -22,6 +22,8 @@ const generateOrderId = () => {
 };
 
 export default function PreOrderPage() {
+  const [fields, setFields] = useState([]);
+
   const [step, setStep] = useState(2);
   const [selectedField, setSelectedField] = useState(1);
   const [order, setOrder] = useState({});
@@ -30,7 +32,19 @@ export default function PreOrderPage() {
   const [submitted, setSubmitted] = useState(false);
   const [orderDate, setOrderDate] = useState(null);
   const [orderId, setOrderId] = useState(null);
-
+  useEffect(() => {
+    fetch("http://localhost:5000/field-primary")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => {
+        setFields(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
   const crops = selectedField ? cropsByField[selectedField] : [];
 
   const handleQtyChange = (cropId, value) => {
@@ -131,13 +145,14 @@ export default function PreOrderPage() {
 
       <div
         className="d-flex flex-wrap gap-4"
-        style={{ justifyContent: "space-between", minHeight: 500 }}
+        style={{ justifyContent: "space-between", minHeight: 450 }}
       >
         <div
           style={{
             flexBasis: "30%",
             flexGrow: 1,
             minWidth: 300,
+            maxHeight: 450,
             backgroundColor: "#f0fff0",
             borderRadius: 8,
             padding: 16,

@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { users } from "../data/swappingData.js";
+
 // Helper to convert lat/lng coords to 3D position on globe surface
 function latLngToXYZ(lat, lng, offset = 0) {
   const phi = (90 - lat) * (Math.PI / 180);

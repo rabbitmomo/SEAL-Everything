@@ -22,12 +22,10 @@ const DeliveryPage = ({
   printReceipt = () => alert("Printing receipt..."),
   formatDate = (date) => new Date(date).toLocaleDateString(),
 }) => {
-  // Calculate total cost based on ordered crops and their prices
   const totalCost = crops
     .filter((crop) => order[crop.id] > 0)
     .reduce((sum, crop) => sum + order[crop.id] * crop.price, 0);
 
-  // How much is left to pay after deposit
   const amountDueLater = Math.max(0, totalCost - deposit);
 
   return (

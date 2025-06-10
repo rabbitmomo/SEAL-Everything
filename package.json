@@ -15,6 +15,7 @@
     "@splinetool/loader": "^1.9.96",
     "@splinetool/r3f-spline": "^1.0.2",
     "@splinetool/react-spline": "^4.0.0",
+    "@supabase/supabase-js": "^2.50.0",
     "bootstrap": "^5.3.6",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",

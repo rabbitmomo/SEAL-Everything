@@ -1,8 +1,3 @@
-export const fields = [
-  { id: 1, name: "Field Amirul Ali", location: "Serdang" },
-  { id: 2, name: "Field Khamarul Fahmi & Siti Farah", location: "Hulu Langat" },
-  { id: 3, name: "Field Ali bin Abu", location: "Bangi" },
-];
 
 export const cropsByField = {
   1: [{ id: 1, name: "Cabbage", price: 8.6 }],
