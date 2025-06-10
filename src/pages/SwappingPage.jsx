@@ -49,6 +49,7 @@ function OutwardFacingLabel({ position, children, color }) {
 }
 
 export default function SwappingPage() {
+  
   // Helper: get ISO date string days from now
   function getDatePlusDays(days) {
     const d = new Date();
@@ -65,7 +66,6 @@ export default function SwappingPage() {
   const earthTexture = useLoader(TextureLoader, "/Earth texture.png");
   const controlsRef = useRef();
 
-  // When swapRequest is created, simulate async confirmation
   useEffect(() => {
     if (!swapRequest) return;
     setSwapStatus("Pending...");

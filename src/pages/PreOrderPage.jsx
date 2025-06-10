@@ -33,7 +33,7 @@ export default function PreOrderPage() {
   const [orderDate, setOrderDate] = useState(null);
   const [orderId, setOrderId] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:5000/field-primary")
+    fetch("https://seal-everything-server-production.up.railway.app/field-primary")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch");
         return res.json();

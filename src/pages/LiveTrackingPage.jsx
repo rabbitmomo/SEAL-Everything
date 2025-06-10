@@ -18,7 +18,7 @@ export default function FieldLiveTracking() {
   const [analysis, setAnalysis] = useState(""); 
 
   useEffect(() => {
-    fetch("http://localhost:5000/field-primary")
+    fetch("https://seal-everything-server-production.up.railway.app/field-primary")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch");
         return res.json();
@@ -38,7 +38,7 @@ export default function FieldLiveTracking() {
 
       if (field?.location) {
         fetch(
-          `http://localhost:5000/weather?city=${encodeURIComponent(
+          `https://seal-everything-server-production.up.railway.app/weather?city=${encodeURIComponent(
             field.location
           )}`
         )
@@ -80,7 +80,7 @@ Notes: ${fieldStatus.notes || "None"}
 `,
       };
 
-      fetch("http://localhost:5000/openai", {
+      fetch("https://seal-everything-server-production.up.railway.app/openai", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
